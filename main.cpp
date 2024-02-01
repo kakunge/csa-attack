@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
             int taggedParametersSize = header->len - sizeof(testPacket.radiotap) - sizeof(testPacket.beaconFrame) + 5;
 
             unsigned char* taggedParameters = (unsigned char*)malloc(sizeof(unsigned char) * (taggedParametersSize));
-printf("-------\n");
+
             while (true) {
                 if (taggedParameter->tagNumber < 0x25) {
                     paramLength = 2 + taggedParameter->len;
@@ -124,15 +124,9 @@ printf("-------\n");
 
                     memcpy(testPacket.taggedParameters, taggedParameters, taggedParametersSize);
 
-
-
                     break;
                 }
             }
-
-            printf("[*] len1 : %d\n", header->len);
-            printf("[*] len2 : %d\n", sizeof(testPacket));
-            printf("[*] len3 : %d\n", packetLen);
 
             res = pcap_sendpacket(pcap, reinterpret_cast<const u_char*>(&testPacket), packetLen);
             if (res != 0) {
